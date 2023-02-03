@@ -12,7 +12,7 @@ function index() {
   // const [Data ,setData] = useState()
   // const [Name, setName] = useState();
    
-  const { users } = useSelector((state) => state);
+  const { users , isLoading} = useSelector((state) => state);
   const dispatch = useDispatch();
   const [online, isOnline] = useState(false);
   const [load, setLoad] = useState(true);
@@ -20,14 +20,12 @@ function index() {
 
   useEffect(() => {
     dispatch(FetchUser());
-  }, [dispatch]);
+  }, []);
 
   
   useEffect(() => {
-    setTimeout(() => {
       isOnline(navigator.onLine);
-      setLoad(false);
-    }, 800);
+    
   }, []);
 
   useEffect(() => {
@@ -44,12 +42,13 @@ function index() {
     };
   }, [online]);
   
-  if(load){
+  if(isLoading){
     return <LoadingScreen/>
   }
+  
 
-  console.log(users)
   return <Box > 
+  
            <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={!online}

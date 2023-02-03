@@ -8,14 +8,13 @@ const initialState = {
   }
 
 export const FetchUser = createAsyncThunk('GetUser',async(message)=>{
-        
         const res = await fetch('/api/GetUsers')
         const result = await res.json();
         return result 
 })
 
-export const AddUser = createAsyncThunk('addUser',async(data)=>{
-        const res = await fetch('/AddUser',{
+export const AddOneUser = createAsyncThunk('addUser',async(data)=>{
+        const res = await fetch('/api/AddUser',{
             method : 'POST',
             headers : {
                 'Content-Type': 'application/json'
@@ -24,6 +23,32 @@ export const AddUser = createAsyncThunk('addUser',async(data)=>{
         })
         const result = await res.json();
         return result;
+
+})
+
+export const EditUser = createAsyncThunk('EditUser',async(data)=>{
+    const res = await fetch('api/EditUser',{
+        method : 'PUT',
+        headers : {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(data)
+    })
+    const result = await res.json();
+    return result;
+
+})
+
+export const RemoveUser = createAsyncThunk('RemoveUser',async(data)=>{
+    const res = await fetch('api/RemoveUser',{
+        method : 'DELETE',
+        headers : {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(data)
+    })
+    const result = await res.json();
+    return result;
 
 })
 
@@ -38,17 +63,21 @@ const UserReducer = createSlice({
             state.isLoading = false
             state.users = action.payload
             if(action.payload.error){
-                console.log('call')
                 state.error = action.payload.error
             }
         },
         [FetchUser.pending] : (state, action) =>{
             state.isLoading = true
         },
-        [AddUser.fulfilled] : (state,action)=>{
-                console.log(action.payload)
+        [AddOneUser.fulfilled] : (state,action)=>{
+               
 
-        }
+        },
+        [RemoveUser.fulfilled] : (state,action)=>{
+          
+
+    }
+        
     }
 })
 

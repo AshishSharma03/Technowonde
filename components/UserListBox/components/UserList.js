@@ -11,6 +11,8 @@ import React, { useState } from "react";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import { useDispatch } from "react-redux";
+import { FetchUser, RemoveUser } from "../../../Reducer/UserReducer";
 
 const TableHeads = ({ children, padding, display,justifyContent }) => (
   <Stack
@@ -27,13 +29,23 @@ const TableHeads = ({ children, padding, display,justifyContent }) => (
 
 function UserList({
   even,
+  id,
   UserName,
   Email,
   Role,
-  DateOfLastLogin,
-  TimeofLastLogin,
+  DateOfLastLogin="Jan 20 2023 ",
+  TimeofLastLogin="06:30PM",
 }) {
   const [Active] = useState(true);
+  const dispatch = useDispatch()
+  const DeleteUser =()=>{
+    dispatch(RemoveUser({id:id}))
+    dispatch(FetchUser())
+    dispatch(FetchUser()) 
+  }
+
+
+
   return (
     <Box
       p={"10px 20px"}
@@ -153,10 +165,10 @@ function UserList({
             display={{md:"flex",sm:"none",xs:"none"}}
             justifyContent="center"
           >
-            <IconButton>
+            <IconButton onClick={DeleteUser}>
               <DeleteOutlineRoundedIcon />
             </IconButton>
-            <IconButton>
+            <IconButton >
               <ModeEditOutlinedIcon />
             </IconButton>
           </TableHeads>

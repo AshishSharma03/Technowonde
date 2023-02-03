@@ -19,7 +19,6 @@ function UserListBox({ users }) {
         n = n - 6;
         k++;
       }
-      console.log(k);
       setMaxPage(k);
     }
   }, [users.User]);
@@ -59,6 +58,7 @@ function UserListBox({ users }) {
         )}
         {users?.slice(Page * 6 - 6, Page * 6).map((a, _i) => (
           <UserList
+            id={a._id}
             even={(_i + 1) % 2 === 0 ? true : false}
             key={_i}
             UserName={a.userName}
