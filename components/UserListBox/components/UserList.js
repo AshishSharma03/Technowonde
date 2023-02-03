@@ -29,6 +29,7 @@ const TableHeads = ({ children, padding, display, justifyContent }) => (
     {children}
   </Stack>
 );
+const Bcolor = ["#E5FFC7","#92FFB3","#CDFF79","#79D5FF","#B192FF","#FFDA79","#FFCFC7"]
 const mon = [
   "Jan",
   "Fab",
@@ -52,28 +53,30 @@ function UserList({ even, id, UserName, Email, Role, password }) {
     dispatch(RemoveUser({ id: id }));
     dispatch(FetchUser());
     dispatch(FetchUser());
+    dispatch(FetchUser());
+    dispatch(FetchUser());
   };
   const [adduserEn, setadduserEn] = useState(false);
 
   useEffect(() => {
-    const date = new Date();
+  
     const randomB = Math.random() > 0.5 ? true : false;
-    setActive(randomB);
-    if (Active) {
+    setActive(randomB); 
+    
+  },[]);
+
+  useEffect(()=>{
+    const date = new Date();
       setDateOfLastLogin(
         mon[date.getMonth()] + " " + date.getDate() + " " + date.getFullYear()
-      );
-      const k = date.getHours() > 12 ? "PM" : "AM";
-      setTimeofLastLogin(date.getHours() - 12 + ":" + date.getMinutes() + k);
-    }
-  }, [Active]);
+        );
+        const k = date.getHours() > 12 ? "PM" : "AM";
+        const hour  =(date.getHours() > 12 )? date.getHours() - 12 : date.getHours() ;  
+        setTimeofLastLogin(hour + ":" + date.getMinutes() + k);
+      
+        
+  },[])
 
-  useEffect(() => {
-    if (!Active) {
-      setDateOfLastLogin(DateOfLastLogin);
-      setTimeofLastLogin(TimeofLastLogin);
-    }
-  }, [setDateOfLastLogin, setTimeofLastLogin]);
 
   return (
     <Box
@@ -90,13 +93,15 @@ function UserList({ even, id, UserName, Email, Role, password }) {
             <input type="checkbox" />
             <TableHeads>
               <Avatar
+              
                 sx={{
+                  backgroundColor:Bcolor[Math.floor(Math.random() * Bcolor.length)],
+                  justifyContent:"center",
                   height: { lg: "35px", md: "35px", sm: "35px", xs: "20px" },
                   width: { lg: "35px", md: "35px", sm: "35px", xs: "20px" },
                 }}
               >
-                {" "}
-                {UserName[0]}
+                <Typography sx={{fontSize:{xs:"10px",sm:"15px",md:"15px",lg:"18px",fontWeight:600}}}>{UserName[0]}</Typography>
               </Avatar>
               <Stack>
                 <Typography
@@ -237,7 +242,7 @@ function UserList({ even, id, UserName, Email, Role, password }) {
                 UserName_={UserName}
                 Email_={Email}
                 Role_={Role}
-                password={password}
+                password_={password}
                 closeButton={
                   <Button
                     color="error"

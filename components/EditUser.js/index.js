@@ -19,17 +19,17 @@ import { EditUser, FetchUser } from "../../Reducer/UserReducer";
 const RoleOp = ["Admin", "Sales Leader", "Sales rep"];
 
 function EditUserS({ closeButton, id_, Email_, Role_, password_, UserName_ }) {
-  const [Email, setEmail] = useState();
-  const [Password, setPassword] = useState();
-  const [UserName, setUserName] = useState();
-  const [Id, setId] = useState();
-  const [Role, setRole] = useState();
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
+  const [UserName, setUserName] = useState('');
+  const [Id, setId] = useState('');
+  const [Role, setRole] = useState('');
   const [error, setError] = useState(false);
   const [errorM, setErrorM] = useState("");
+  const [visible,setVisible]= useState(false)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(id_);
     setEmail(Email_);
     setPassword(password_);
     setUserName(UserName_);
@@ -37,7 +37,7 @@ function EditUserS({ closeButton, id_, Email_, Role_, password_, UserName_ }) {
     setId(id_);
   }, [setEmail, setPassword, setUserName, setRole, setId]);
 
-  const onHandleClick = () => {
+  const onHandleClick =async () => {
     if (Email && Password && UserName) {
       var Ere = /\S+@\S+\.\S+/;
       if (!Email.match(Ere)) {
@@ -49,7 +49,7 @@ function EditUserS({ closeButton, id_, Email_, Role_, password_, UserName_ }) {
           /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).{8,16}$/;
         if (Password.match(pass)) {
           setError(false);
-          dispatch(
+          const k = await dispatch(
             EditUser({
               email: Email,
               password: Password,
@@ -58,9 +58,15 @@ function EditUserS({ closeButton, id_, Email_, Role_, password_, UserName_ }) {
               id: Id,
             })
           );
-          dispatch(FetchUser());
-          dispatch(FetchUser());
-          dispatch(FetchUser());
+         
+                dispatch(FetchUser());
+                dispatch(FetchUser());
+                dispatch(FetchUser());
+                dispatch(FetchUser());
+            
+       
+            
+         
         } else {
           setErrorM(
             "Password  must 8 to 16 characters which contain at least one numeric digit, one uppercase and one lowercase letter and  one Special Symbol."
@@ -133,21 +139,40 @@ function EditUserS({ closeButton, id_, Email_, Role_, password_, UserName_ }) {
               setEmail(e.target.value);
             }}
           />
-          <Box
+           <Stack direction={"row"} gap={1}
+          sx={{
+            borderRadius: "5px",
+            border: "1px solid #E4E4E4",
+          }}
+          >
+           <Box
             component="input"
-            placeholder="Password"
             value={Password}
+            type={(visible)?"text":"password"}
+            placeholder="Password"
             sx={{
               padding: "10px",
-              width: "250px",
+              width: "200px",
               fontSize: "15px",
               borderRadius: "5px",
-              border: "1px solid #E4E4E4",
+              border: "none",
+              '&:active':{
+                 border:"none"
+              }
+              
             }}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-          />
+            />
+            <IconButton onClick={()=>{setVisible(!visible)}}>
+              {(visible)?
+              <RemoveRedEyeOutlinedIcon/>
+              :
+             <VisibilityOffOutlinedIcon/>
+               }
+            </IconButton>
+            </Stack>
           <Box
             value={Role}
             component="select"

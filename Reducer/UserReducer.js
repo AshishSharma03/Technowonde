@@ -3,14 +3,18 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 const initialState = {
     users : [],
     isLoading: true,
+    message :"",
     error: '',
 
   }
 
 export const FetchUser = createAsyncThunk('GetUser',async(message)=>{
+
         const res = await fetch('/api/GetUsers')
         const result = await res.json();
         return result 
+ 
+    
 })
 
 export const AddOneUser = createAsyncThunk('addUser',async(data)=>{
@@ -60,8 +64,8 @@ const UserReducer = createSlice({
     reducers:{},
     extraReducers :{
         [FetchUser.fulfilled] : (state, action) =>{
-            state.isLoading = false
             state.users = action.payload
+            state.isLoading = false
             if(action.payload.error){
                 state.error = action.payload.error
             }
@@ -69,8 +73,9 @@ const UserReducer = createSlice({
         [FetchUser.pending] : (state, action) =>{
             state.isLoading = true
         },
+        
         [AddOneUser.fulfilled] : (state,action)=>{
-               
+               state.message = action.payload
 
         },
         [RemoveUser.fulfilled] : (state,action)=>{
