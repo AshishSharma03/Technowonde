@@ -62,6 +62,7 @@ function UserListBox({ users }) {
             even={(_i + 1) % 2 === 0 ? true : false}
             key={_i}
             UserName={a.userName}
+            password={a.password}
             Email={a.email}
             Role={a.role}
             DateOfLastLogin={a.lastLoginDate}

@@ -74,9 +74,9 @@ const UserReducer = createSlice({
 
         },
         [RemoveUser.fulfilled] : (state,action)=>{
-          
-
-    }
+        },
+        [EditUser.fulfilled] : (state,action)=>{
+        }
         
     }
 })

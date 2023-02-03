@@ -1,7 +1,9 @@
 import {
   Avatar,
   Box,
+  Button,
   Chip,
+  Dialog,
   Grid,
   IconButton,
   Stack,
@@ -12,7 +14,8 @@ import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import { useDispatch } from "react-redux";
-import { FetchUser, RemoveUser } from "../../../Reducer/UserReducer";
+import {  FetchUser, RemoveUser } from "../../../Reducer/UserReducer";
+import EditUserS from "../../EditUser.js";
 
 const TableHeads = ({ children, padding, display,justifyContent }) => (
   <Stack
@@ -33,6 +36,7 @@ function UserList({
   UserName,
   Email,
   Role,
+  password,
   DateOfLastLogin="Jan 20 2023 ",
   TimeofLastLogin="06:30PM",
 }) {
@@ -43,7 +47,7 @@ function UserList({
     dispatch(FetchUser())
     dispatch(FetchUser()) 
   }
-
+  const [adduserEn, setadduserEn] = useState(false);
 
 
   return (
@@ -65,7 +69,8 @@ function UserList({
                   height: { lg: "35px", md: "35px", sm: "35px", xs: "20px" },
                   width: { lg: "35px", md: "35px", sm: "35px", xs: "20px" },
                 }}
-              />
+              > {UserName[0]}
+                </Avatar>
               <Stack>
                 <Typography
                   sx={{
@@ -168,9 +173,18 @@ function UserList({
             <IconButton onClick={DeleteUser}>
               <DeleteOutlineRoundedIcon />
             </IconButton>
-            <IconButton >
+            <IconButton   onClick={()=>{setadduserEn(true)}}>
               <ModeEditOutlinedIcon />
             </IconButton>
+            <Dialog open={adduserEn} >
+            <EditUserS 
+            id_={id}
+            UserName_={UserName}
+            Email_={Email}
+            Role_={Role}
+            password_={password}
+            closeButton={<Button color='error' onClick={()=>{setadduserEn(false)}}>close</Button>}/>
+            </Dialog>
           </TableHeads>
         </Grid>
       </Grid>
