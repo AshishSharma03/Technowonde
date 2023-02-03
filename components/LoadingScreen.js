@@ -4,7 +4,7 @@ import React from 'react'
 function LoadingScreen() {
   return (
     <Box minHeight={"100vh"} display="flex" justifyContent={"center"} alignItems="center">
-        <CircularProgress size={"20px"} />
+        <CircularProgress size={"30px"} thickness={5} />
     </Box>
   )
 }

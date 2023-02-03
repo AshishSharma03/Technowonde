@@ -1,12 +1,12 @@
-    import React from 'react'
-    import { Box, Button,  Chip, Stack, Typography } from "@mui/material";
+    import React,{useState} from 'react'
+    import { Box, Button,  Chip, Dialog, Stack, Typography } from "@mui/material";
     import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
     import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
     import { CSVLink, CSVDownload } from "react-csv";
 import AddUser from '../../AddUser';
 
-    const CustomButton =({icon,name,color})=> 
-        <Button   color='secondary' variant='contained' sx={{padding:{lg:"8px 18px"},borderRadius:"9px",border:(color)?"1px solid #DADADA": "",background:(color)?color:"",color:(color)?"#000000":"",boxShadow:"none",'&:hover':{
+    const CustomButton =({icon,name,color,onClick_})=> 
+        <Button  onClick={onClick_} color='secondary' variant='contained' sx={{padding:{lg:"8px 18px"},borderRadius:"9px",border:(color)?"1px solid #DADADA": "",background:(color)?color:"",color:(color)?"#000000":"",boxShadow:"none",'&:hover':{
             boxShadow:"none",
             backgroundColor:(!color)?"":"#EEEEEE",
             
@@ -18,6 +18,8 @@ import AddUser from '../../AddUser';
          </Button>;
 
     function BoxHeader({users,data}) {
+            const [adduserEn, setadduserEn] = useState(false);
+
       return (
         <Box p={2}>
         <Box display={"flex"}  gap={1}>
@@ -30,7 +32,7 @@ import AddUser from '../../AddUser';
         <CSVLink data={data} style={{textDecoration:"none"}} filename="UserReport">
         <CustomButton name={"Download CSV"}  icon={<CloudDownloadOutlinedIcon/>} color="#ffffff" />
         </CSVLink>
-        <CustomButton name={"Add user"} icon={  <AddOutlinedIcon/>} />
+        <CustomButton name={"Add user"}  onClick_={()=>{setadduserEn(true)}} icon={  <AddOutlinedIcon/>} />
          </Stack>
         </Box>
         <Typography sx={{color:"gray",fontSize:{lg:"15px",md:"15px",xs:"10px"}}}>Manage your team and their account permission here</Typography>
@@ -38,10 +40,16 @@ import AddUser from '../../AddUser';
         <CSVLink data={data} style={{textDecoration:"none"}} filename="UserReport">
         <CustomButton name={"Download CSV"} icon={<CloudDownloadOutlinedIcon/>} color="#ffffff" />
         </CSVLink>
-        <CustomButton name={"Add user"}  icon={  <AddOutlinedIcon/>} />
-        
+        <CustomButton name={"Add user"}  onClick_={()=>{setadduserEn(true)}} icon={  <AddOutlinedIcon/>} />
         </Stack>
-        {/* <AddUser/> */}
+    
+         <Dialog  open={adduserEn} >
+        <AddUser 
+        closeButton={<Button color='error' onClick={()=>{setadduserEn(false)}}>close</Button>}
+        
+        />
+         </Dialog>
+      
      </Box>
 
       )

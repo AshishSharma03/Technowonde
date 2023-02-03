@@ -1,47 +1,99 @@
-import { Box, Button, Dialog, Grid, IconButton, Input, Stack, Typography } from '@mui/material'
-import React from 'react'
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import {
+  Alert,
+  Box,
+  Button,
+  Dialog,
+  Grid,
+  IconButton,
+  Input,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
+const Role = ["Admin", "ss"];
 
-function AddUser() {
-  
+function AddUser({ closeButton }) {
   return (
-    <Dialog  open={true} >
-        <Box sx={{padding:"10px"}}>
-          <Box textAlign={"center"} p={"20px"}>
-            <Typography sx={{fontSize:"15px",fontWeight:600}}> Add New User</Typography>
+    <Box>
+      <Box display={"flex"} justifyContent="right">
+        {closeButton}
+      </Box>
+      <Box sx={{ padding: "10px" }}>
+        <Typography
+          sx={{
+            fontSize: "15px",
+            fontWeight: 600,
+            padding: "10px 0px",
+            textAlign: "center",
+          }}
+        >
+          {" "}
+          Add New <span style={{color:"green"}}>User</span>
+        </Typography>
+        <Stack gap={2}>
+          {/* <Alert color="error">sss</Alert> */}
+          <Box
+            component="input"
+            placeholder="Username"
+            sx={{
+              padding: "10px",
+              width: "250px",
+              fontSize: "15px",
+              borderRadius: "5px",
+              border: "1px solid #E4E4E4",
+            }}
+          />
+          <Box
+            component="input"
+            placeholder="Email"
+            sx={{
+              padding: "10px",
+              width: "250px",
+              fontSize: "15px",
+              borderRadius: "5px",
+              border: "1px solid #E4E4E4",
+            }}
+          />
+          <Box
+            component="input"
+            placeholder="Password"
+            sx={{
+              padding: "10px",
+              width: "250px",
+              fontSize: "15px",
+              borderRadius: "5px",
+              border: "1px solid #E4E4E4",
+            }}
+          />
+          <Box
+            component="select"
+            sx={{
+              padding: "10px",
+              width: "250px",
+              fontSize: "15px",
+              borderRadius: "5px",
+              border: "1px solid #E4E4E4",
+            }}
+          >
+            {Role.map((a, _i) => (
+              <Box p={"20px"} component="option">
+                {a}
+              </Box>
+            ))}
           </Box>
-          <Box component={'div'} src="" width={"200px"} height={"200px"} sx={{border:"1px solid #EEEEEE"}}>
-            
-            <VisibilityOffOutlinedIcon/>
-          </Box>
-          <Stack direction={'column'} gap={1}>
-            <input placeholder='User Name'   style={{padding:"10px" ,fontSize:"15px",width:"300px"}}  />
-            <input placeholder='Email'   style={{padding:"10px" ,fontSize:"15px",width:"300px"}}  />
-            <Stack direction={"row"} gap={1}>
-            <input placeholder='Password'   style={{padding:"10px" ,fontSize:"15px",width:"250px"}}  />
-            <IconButton>
-                <VisibilityOffOutlinedIcon/>
-            </IconButton>
-            </Stack>
-            <Stack direction={"row"} gap={1}>
-            <input placeholder='Confirm Password'   style={{padding:"10px" ,fontSize:"15px",width:"250px"}}  />
-            <IconButton>
-                <VisibilityOffOutlinedIcon/>
-            </IconButton>
-            </Stack>
-
-            <select style={{padding:"10px"}}>
-              <option style={{fontSize:"15px",padding:"10px"}}>Admin</option>
-              <option style={{fontSize:"15px",padding:"10px"}}>Admin</option>
-            </select>
-          <Button variant="contained">Add User</Button>
-          </Stack>
+        </Stack>
+        <Box paddingTop="30px">
+          <Button fullWidth variant="contained" sx={{ boxShadow: "none" }}>
+            ADD USER
+          </Button>
         </Box>
-        
-    </Dialog>
-  )
+      </Box>
+    </Box>
+  );
 }
 
-export default AddUser
+export default AddUser;

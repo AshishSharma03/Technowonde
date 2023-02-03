@@ -27,7 +27,7 @@ function index() {
     setTimeout(() => {
       isOnline(navigator.onLine);
       setLoad(false);
-    }, 500);
+    }, 800);
   }, []);
 
   useEffect(() => {
