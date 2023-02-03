@@ -8,6 +8,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import AppHeader from "../components/AppHeader";
 import dbConnect from "../lib/dbConnect";
 import User from "../lib/User";
+import {motion } from "framer-motion";
 
 function index(props) {
 
@@ -51,10 +52,17 @@ function index(props) {
         <Alert severity="error">Check your connection!</Alert>
       </Snackbar>
       <Container maxWidth={"lg"}>
+      <motion.div initial={{ y: 10 }} animate={{ y: 0 }}> 
         <AppHeader />
+        </motion.div>
         <Stack direction={"column"} gap={{ lg: 2, md: 2, sm: 2, xs: 2 }}>
+
+        <motion.div initial={{ x: 100 }} animate={{ x: 0 }}> 
           <CustomButtonGroups />
+          </motion.div> 
+          <motion.div initial={{ x: -50 }} animate={{ x: 0 }}> 
           <UserListBox users={users} />
+          </motion.div> 
         </Stack>
       </Container>
     </Box>

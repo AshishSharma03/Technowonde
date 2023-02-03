@@ -96,6 +96,7 @@ function UserList({ even, id, UserName, Email, Role, password }) {
               
                 sx={{
                   backgroundColor:Bcolor[Math.floor(Math.random() * Bcolor.length)],
+                  
                   justifyContent:"center",
                   height: { lg: "35px", md: "35px", sm: "35px", xs: "20px" },
                   width: { lg: "35px", md: "35px", sm: "35px", xs: "20px" },

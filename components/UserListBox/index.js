@@ -6,7 +6,7 @@ import UserList from "./components/UserList";
 import CustomPagination, { CustomButton } from "./components/CustomPagination";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
-
+import {motion } from "framer-motion";
 function UserListBox({ users }) {
   const [MaxPage, setMaxPage] = useState(1);
   const [Page, setPage] = useState(1);
@@ -56,6 +56,7 @@ function UserListBox({ users }) {
         ) : (
           ""
         )}
+         <motion.div initial={{ y: -50 }} animate={{ y: 0 }}> 
         {users?.slice(Page * 6 - 6, Page * 6).map((a, _i) => (
           <UserList
             id={a._id}
@@ -69,6 +70,7 @@ function UserListBox({ users }) {
             TimeofLastLogin={a.lastLoginTime}
           />
         ))}
+        </motion.div>
         <Box flexGrow={1} />
         <Divider />
 
