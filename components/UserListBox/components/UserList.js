@@ -9,15 +9,15 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import { useDispatch } from "react-redux";
-import {  FetchUser, RemoveUser } from "../../../Reducer/UserReducer";
+import { FetchUser, RemoveUser } from "../../../Reducer/UserReducer";
 import EditUserS from "../../EditUser.js";
 
-const TableHeads = ({ children, padding, display,justifyContent }) => (
+const TableHeads = ({ children, padding, display, justifyContent }) => (
   <Stack
     direction={"row"}
     gap={1}
@@ -29,44 +29,51 @@ const TableHeads = ({ children, padding, display,justifyContent }) => (
     {children}
   </Stack>
 );
-const mon = ["Jan","Fab","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-function UserList({
-  even,
-  id,
-  UserName,
-  Email,
-  Role,
-  password,
-}) {
-  const [Active,setActive] = useState(true);
-  const[DateOfLastLogin,setDateOfLastLogin]= useState()
-  const[TimeofLastLogin,setTimeofLastLogin]= useState()
-  const dispatch = useDispatch()
-  const DeleteUser =()=>{
-    dispatch(RemoveUser({id:id}))
-    dispatch(FetchUser())
-    dispatch(FetchUser()) 
-  }
+const mon = [
+  "Jan",
+  "Fab",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+function UserList({ even, id, UserName, Email, Role, password }) {
+  const [Active, setActive] = useState(true);
+  const [DateOfLastLogin, setDateOfLastLogin] = useState();
+  const [TimeofLastLogin, setTimeofLastLogin] = useState();
+  const dispatch = useDispatch();
+  const DeleteUser = () => {
+    dispatch(RemoveUser({ id: id }));
+    dispatch(FetchUser());
+    dispatch(FetchUser());
+  };
   const [adduserEn, setadduserEn] = useState(false);
 
+  useEffect(() => {
+    const date = new Date();
+    const randomB = Math.random() > 0.5 ? true : false;
+    setActive(randomB);
+    if (Active) {
+      setDateOfLastLogin(
+        mon[date.getMonth()] + " " + date.getDate() + " " + date.getFullYear()
+      );
+      const k = date.getHours() > 12 ? "PM" : "AM";
+      setTimeofLastLogin(date.getHours() - 12 + ":" + date.getMinutes() + k);
+    }
+  }, [Active]);
 
-   
-
-    useEffect(() => {
-      
-      const date = new Date()
-      const randomB = Math.random() > 0.5 ? true : false;
-      setActive(randomB)
-      if(Active){
-        setDateOfLastLogin( mon[date.getMonth()]+" "+ date.getDate()+ " "+ date.getFullYear())
-        const k = (date.getHours() > 12)? "PM" :"AM"
-        setTimeofLastLogin((date.getHours() - 12 )+":"+date.getMinutes()+k)
-      }else if(!Active){
-        setDateOfLastLogin(DateOfLastLogin)
-        setTimeofLastLogin(TimeofLastLogin)
-      }
-      
-    },[Active]);
+  useEffect(() => {
+    if (!Active) {
+      setDateOfLastLogin(DateOfLastLogin);
+      setTimeofLastLogin(TimeofLastLogin);
+    }
+  }, [setDateOfLastLogin, setTimeofLastLogin]);
 
   return (
     <Box
@@ -78,7 +85,7 @@ function UserList({
       }}
     >
       <Grid container>
-        <Grid  item lg={6.5} md={6} sm={6} xs={6}>
+        <Grid item lg={6.5} md={6} sm={6} xs={6}>
           <Stack direction={"row"} gap={1}>
             <input type="checkbox" />
             <TableHeads>
@@ -87,8 +94,10 @@ function UserList({
                   height: { lg: "35px", md: "35px", sm: "35px", xs: "20px" },
                   width: { lg: "35px", md: "35px", sm: "35px", xs: "20px" },
                 }}
-              > {UserName[0]}
-                </Avatar>
+              >
+                {" "}
+                {UserName[0]}
+              </Avatar>
               <Stack>
                 <Typography
                   sx={{
@@ -116,7 +125,15 @@ function UserList({
           </Stack>
         </Grid>
 
-        <Grid item lg={1.5} md={1.5} sm={2} xs={2} display="flex" justifyContent={"left"}>
+        <Grid
+          item
+          lg={1.5}
+          md={1.5}
+          sm={2}
+          xs={2}
+          display="flex"
+          justifyContent={"left"}
+        >
           <TableHeads>
             <Chip
               label={Active ? "Active" : "Invited"}
@@ -133,7 +150,7 @@ function UserList({
                 backgroundColor: Active ? "#effcf4" : "#e7eaef",
                 color: Active ? "#75A88A" : "#747b88",
                 display: { lg: "block", sm: "block", md: "block", xs: "none" },
-              }}    
+              }}
             />
 
             <FiberManualRecordIcon
@@ -147,7 +164,15 @@ function UserList({
           </TableHeads>
         </Grid>
 
-        <Grid item lg={1} md={1.5} sm={2} xs={2} display="flex" justifyContent={"left"} >
+        <Grid
+          item
+          lg={1}
+          md={1.5}
+          sm={2}
+          xs={2}
+          display="flex"
+          justifyContent={"left"}
+        >
           <TableHeads>
             <Typography
               sx={{
@@ -160,7 +185,15 @@ function UserList({
           </TableHeads>
         </Grid>
 
-        <Grid item lg={2} md={2} sm={2} xs={2} display="flex" justifyContent={"center"}>
+        <Grid
+          item
+          lg={2}
+          md={2}
+          sm={2}
+          xs={2}
+          display="flex"
+          justifyContent={"center"}
+        >
           <TableHeads>
             <Stack>
               <Typography
@@ -182,26 +215,40 @@ function UserList({
             </Stack>
           </TableHeads>
         </Grid>
-        <Grid item lg={1} md={1} sm={0} xs={0}  >
+        <Grid item lg={1} md={1} sm={0} xs={0}>
           <TableHeads
             name={""}
-            display={{md:"flex",sm:"none",xs:"none"}}
+            display={{ md: "flex", sm: "none", xs: "none" }}
             justifyContent="center"
           >
             <IconButton onClick={DeleteUser}>
               <DeleteOutlineRoundedIcon />
             </IconButton>
-            <IconButton   onClick={()=>{setadduserEn(true)}}>
+            <IconButton
+              onClick={() => {
+                setadduserEn(true);
+              }}
+            >
               <ModeEditOutlinedIcon />
             </IconButton>
-            <Dialog open={adduserEn} >
-            <EditUserS 
-            id_={id}
-            UserName_={UserName}
-            Email_={Email}
-            Role_={Role}
-            password={password}
-            closeButton={<Button color='error' onClick={()=>{setadduserEn(false)}}>close</Button>}/>
+            <Dialog open={adduserEn}>
+              <EditUserS
+                id_={id}
+                UserName_={UserName}
+                Email_={Email}
+                Role_={Role}
+                password={password}
+                closeButton={
+                  <Button
+                    color="error"
+                    onClick={() => {
+                      setadduserEn(false);
+                    }}
+                  >
+                    close
+                  </Button>
+                }
+              />
             </Dialog>
           </TableHeads>
         </Grid>
