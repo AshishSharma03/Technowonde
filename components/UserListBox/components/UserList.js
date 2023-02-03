@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
@@ -29,7 +29,7 @@ const TableHeads = ({ children, padding, display,justifyContent }) => (
     {children}
   </Stack>
 );
-
+const mon = ["Jan","Fab","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 function UserList({
   even,
   id,
@@ -37,10 +37,10 @@ function UserList({
   Email,
   Role,
   password,
-  DateOfLastLogin="Jan 20 2023 ",
-  TimeofLastLogin="06:30PM",
 }) {
-  const [Active] = useState(true);
+  const [Active,setActive] = useState(true);
+  const[DateOfLastLogin,setDateOfLastLogin]= useState()
+  const[TimeofLastLogin,setTimeofLastLogin]= useState()
   const dispatch = useDispatch()
   const DeleteUser =()=>{
     dispatch(RemoveUser({id:id}))
@@ -49,6 +49,24 @@ function UserList({
   }
   const [adduserEn, setadduserEn] = useState(false);
 
+
+   
+
+    useEffect(() => {
+      
+      const date = new Date()
+      const randomB = Math.random() > 0.5 ? true : false;
+      setActive(randomB)
+      if(Active){
+        setDateOfLastLogin( mon[date.getMonth()]+" "+ date.getDate()+ " "+ date.getFullYear())
+        const k = (date.getHours() > 12)? "PM" :"AM"
+        setTimeofLastLogin((date.getHours() - 12 )+":"+date.getMinutes()+k)
+      }else if(!Active){
+        setDateOfLastLogin(DateOfLastLogin)
+        setTimeofLastLogin(TimeofLastLogin)
+      }
+      
+    },[Active]);
 
   return (
     <Box
@@ -182,7 +200,7 @@ function UserList({
             UserName_={UserName}
             Email_={Email}
             Role_={Role}
-            password_={password}
+            password={password}
             closeButton={<Button color='error' onClick={()=>{setadduserEn(false)}}>close</Button>}/>
             </Dialog>
           </TableHeads>
